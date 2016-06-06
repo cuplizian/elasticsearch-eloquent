@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Elasticsearch Eloquent by isswp101</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Elasticsearch Eloquent</h1>
+      <h2 class="project-tagline">Elasticsearch functionality like Laravel Eloquent models</h2>
+      <a href="https://github.com/isswp101/elasticsearch-eloquent" class="btn">View on GitHub</a>
+      <a href="https://github.com/isswp101/elasticsearch-eloquent/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/isswp101/elasticsearch-eloquent/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="persimmon--elasticsearch-eloquent-beta" class="anchor" href="#persimmon--elasticsearch-eloquent-beta" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Persimmon / Elasticsearch Eloquent (Beta)</h1>
+
+<p><a href="https://packagist.org/packages/isswp101/elasticsearch-eloquent"><img src="https://img.shields.io/packagist/v/isswp101/elasticsearch-eloquent.svg?style=flat-square" alt="Latest Version on Packagist"></a>
+<a href="LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="Software License"></a>
+<a href="https://travis-ci.org/isswp101/elasticsearch-eloquent"><img src="https://img.shields.io/travis/isswp101/elasticsearch-eloquent/master.svg?style=flat-square" alt="Build Status"></a>
+<a href="https://scrutinizer-ci.com/g/isswp101/elasticsearch-eloquent/code-structure"><img src="https://img.shields.io/scrutinizer/coverage/g/isswp101/elasticsearch-eloquent.svg?style=flat-square" alt="Coverage Status"></a>
+<a href="https://scrutinizer-ci.com/g/isswp101/elasticsearch-eloquent"><img src="https://img.shields.io/scrutinizer/g/isswp101/elasticsearch-eloquent.svg?style=flat-square" alt="Quality Score"></a>
+<a href="https://packagist.org/packages/isswp101/elasticsearch-eloquent"><img src="https://img.shields.io/packagist/dt/isswp101/elasticsearch-eloquent.svg?style=flat-square" alt="Total Downloads"></a></p>
+
+<p>TBD.</p>
+
+<h2>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h2>
+
+<p>Via Composer</p>
+
+<div class="highlight highlight-source-shell"><pre>$ composer require isswp101/elasticsearch-eloquent</pre></div>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="create-a-new-model" class="anchor" href="#create-a-new-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create a new model</h3>
+
+<p>You must specify static <code>index</code> and <code>type</code> variables to determine the document path.</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Isswp101\Persimmon\ElasticsearchModel</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">Product</span> <span class="pl-k">extends</span> <span class="pl-e">ElasticsearchModel</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$index</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-smi">$name</span>;</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-smi">$price</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
+<span class="pl-s1">}</span></pre></div>
+
+<p>Here <code>name</code> and <code>price</code> are fields which will be stored in Elasticsearch.<br>
+Use the static <code>create()</code> method to create document in Elasticsearch:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>create([<span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">3</span>, <span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Product 3<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>price<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">30</span>]);</span></pre></div>
+
+<h3>
+<a id="save-the-model" class="anchor" href="#save-the-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Save the model</h3>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Product</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$product</span><span class="pl-k">-&gt;</span><span class="pl-smi">id</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$product</span><span class="pl-k">-&gt;</span><span class="pl-smi">name</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Product 1<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$product</span><span class="pl-k">-&gt;</span><span class="pl-smi">price</span> <span class="pl-k">=</span> <span class="pl-c1">20</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$product</span><span class="pl-k">-&gt;</span>save();</span></pre></div>
+
+<p>Use <code>save()</code> method to store model data in Elasticsearch. Let's see how this looks in Elasticsearch:</p>
+
+<div class="highlight highlight-source-json"><pre>{
+   <span class="pl-s"><span class="pl-pds">"</span>_index<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>test<span class="pl-pds">"</span></span>,
+   <span class="pl-s"><span class="pl-pds">"</span>_type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>test<span class="pl-pds">"</span></span>,
+   <span class="pl-s"><span class="pl-pds">"</span>_id<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>,
+   <span class="pl-s"><span class="pl-pds">"</span>_version<span class="pl-pds">"</span></span>: <span class="pl-c1">1</span>,
+   <span class="pl-s"><span class="pl-pds">"</span>found<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
+   <span class="pl-s"><span class="pl-pds">"</span>_source<span class="pl-pds">"</span></span>: {
+      <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Product 1<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>price<span class="pl-pds">"</span></span>: <span class="pl-c1">10</span>,
+      <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>: <span class="pl-c1">1</span>,
+      <span class="pl-s"><span class="pl-pds">"</span>user_id<span class="pl-pds">"</span></span>: <span class="pl-c1">null</span>,
+      <span class="pl-s"><span class="pl-pds">"</span>created_at<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2016-06-03 08:11:08<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>updated_at<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2016-06-03 08:11:08<span class="pl-pds">"</span></span>
+   }
+}</pre></div>
+
+<p>Fields <code>created_at</code> and <code>updated_at</code> were created automatically. The <code>user_id</code> field is persistent field to store user id.</p>
+
+<h3>
+<a id="find-existing-model" class="anchor" href="#find-existing-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Find existing model</h3>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>find(<span class="pl-c1">1</span>);</span></pre></div>
+
+<p>If you have big data in Elasticsearch you can specify certain fields to retrieve:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>find(<span class="pl-c1">1</span>, [<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>]);</span></pre></div>
+
+<p>In this case the <code>price</code> field equals <code>0</code> because it's populated as the default value that you specified in the model.</p>
+
+<p>There are the following methods:</p>
+
+<ul>
+<li>
+<code>findOrFail()</code> returns <code>ModelNotFoundException</code> exception if no result found.</li>
+<li>
+<code>findOrNew()</code> returns a new model if no result found.</li>
+</ul>
+
+<h3>
+<a id="model-cache" class="anchor" href="#model-cache" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Model cache</h3>
+
+<p>There is a smart model cache when you use methods like <code>find()</code>, <code>findOrFail()</code> and so on.</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>find(<span class="pl-c1">1</span>, [<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>]);  <span class="pl-c">// will be retrieved from the elasticsearch</span></span>
+<span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>find(<span class="pl-c1">1</span>, [<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>]);  <span class="pl-c">// will be retrieved from the cache</span></span>
+<span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>find(<span class="pl-c1">1</span>, [<span class="pl-s"><span class="pl-pds">'</span>price<span class="pl-pds">'</span></span>]); <span class="pl-c">// elasticsearch</span></span>
+<span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>find(<span class="pl-c1">1</span>, [<span class="pl-s"><span class="pl-pds">'</span>price<span class="pl-pds">'</span></span>]); <span class="pl-c">// cache</span></span>
+<span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>find(<span class="pl-c1">1</span>, [<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>]);  <span class="pl-c">// cache</span></span></pre></div>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>findOrFail(<span class="pl-c1">1</span>);      <span class="pl-c">// elasticsearch</span></span>
+<span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>find(<span class="pl-c1">1</span>);            <span class="pl-c">// cache</span></span>
+<span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>find(<span class="pl-c1">1</span>, [<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>]);  <span class="pl-c">// cache</span></span>
+<span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>find(<span class="pl-c1">1</span>, [<span class="pl-s"><span class="pl-pds">'</span>price<span class="pl-pds">'</span></span>]); <span class="pl-c">// cache</span></span></pre></div>
+
+<h3>
+<a id="partial-update" class="anchor" href="#partial-update" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Partial update</h3>
+
+<p>You can use partial update to update specific fields quickly.</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>find(<span class="pl-c1">1</span>, [<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>]);</span>
+<span class="pl-s1"><span class="pl-smi">$product</span><span class="pl-k">-&gt;</span><span class="pl-smi">name</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Product 3<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$product</span><span class="pl-k">-&gt;</span>save(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>);</span></pre></div>
+
+<h3>
+<a id="delete-models" class="anchor" href="#delete-models" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Delete models</h3>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>find(<span class="pl-c1">1</span>);</span>
+<span class="pl-s1"><span class="pl-smi">$product</span><span class="pl-k">-&gt;</span>delete();</span></pre></div>
+
+<p>You can use the static method:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">Product</span><span class="pl-k">::</span>destroy(<span class="pl-c1">1</span>);</span></pre></div>
+
+<h3>
+<a id="basic-search" class="anchor" href="#basic-search" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Basic search</h3>
+
+<p>There are helpers to search documents:</p>
+
+<ul>
+<li>
+<code>first($query)</code> returns the first document according to the query or <code>null</code>.</li>
+<li>
+<code>firstOrFail($query)</code> returns <code>ModelNotFoundException</code> exception if <code>first($query)</code> returns <code>null</code>.</li>
+<li>
+<code>search($query)</code> returns documents (default 50 items) according to the query.</li>
+<li>
+<code>map($query, callable $callback)</code> returns all documents (default 50 items per request) according to the query.</li>
+<li>
+<code>all($query)</code> returns all documents according to the query.</li>
+</ul>
+
+<p>If <code>$query</code> is not passed the query will be as <code>match_all</code> query.</p>
+
+<h3>
+<a id="query-builder" class="anchor" href="#query-builder" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Query Builder</h3>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Isswp101\Persimmon\QueryBuilder\QueryBuilder</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$query</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">QueryBuilder</span>();</span></pre></div>
+
+<p>Simple usage:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$query</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">QueryBuilder</span>([<span class="pl-s"><span class="pl-pds">'</span>query<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> [<span class="pl-s"><span class="pl-pds">'</span>match<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> [<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Product<span class="pl-pds">'</span></span>]]]);</span>
+<span class="pl-s1"><span class="pl-smi">$products</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>search(<span class="pl-smi">$query</span>);</span></pre></div>
+
+<p>The <code>match</code> query:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$query</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">QueryBuilder</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$query</span><span class="pl-k">-&gt;</span>match(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Product<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$products</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>search(<span class="pl-smi">$query</span>);    </span></pre></div>
+
+<p>The <code>range</code> query:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$query</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">QueryBuilder</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$query</span><span class="pl-k">-&gt;</span>betweenOrEquals(<span class="pl-s"><span class="pl-pds">'</span>price<span class="pl-pds">'</span></span>, <span class="pl-c1">20</span>, <span class="pl-c1">30</span>)<span class="pl-k">-&gt;</span>greaterThan(<span class="pl-s"><span class="pl-pds">'</span>price<span class="pl-pds">'</span></span>, <span class="pl-c1">15</span>);</span>
+<span class="pl-s1"><span class="pl-smi">$products</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>search(<span class="pl-smi">$query</span>);</span></pre></div>
+
+<p>The <code>TermFilter</code> filter:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$query</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">QueryBuilder</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$query</span><span class="pl-k">-&gt;</span>filter(<span class="pl-k">new</span> <span class="pl-c1">TermFilter</span>(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>2<span class="pl-pds">'</span></span>));</span>
+<span class="pl-s1"><span class="pl-smi">$products</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>search(<span class="pl-smi">$query</span>);</span></pre></div>
+
+<p>The <code>IdsFilter</code> filter:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$query</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">QueryBuilder</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$query</span><span class="pl-k">-&gt;</span>filter(<span class="pl-k">new</span> <span class="pl-c1">IdsFilter</span>([<span class="pl-c1">1</span>, <span class="pl-c1">3</span>]));</span>
+<span class="pl-s1"><span class="pl-smi">$products</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>search(<span class="pl-smi">$query</span>);</span></pre></div>
+
+<p><strong>TO BE CONTINUED...</strong></p>
+
+<p><a href="https://github.com/TODO" class="user-mention">@TODO</a>:</p>
+
+<ul>
+<li>Add parent child relationship</li>
+<li>Add aggregations</li>
+<li>Add <code>RangeOrExistFilter</code> filter</li>
+</ul>
+
+<h2>
+<a id="change-log" class="anchor" href="#change-log" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Change log</h2>
+
+<p>Please see <a href="CHANGELOG.md">CHANGELOG</a> for more information what has changed recently.</p>
+
+<h2>
+<a id="testing" class="anchor" href="#testing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Testing</h2>
+
+<div class="highlight highlight-source-shell"><pre>$ composer <span class="pl-c1">test</span></pre></div>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>Please see <a href="CONTRIBUTING.md">CONTRIBUTING</a> and <a href="CONDUCT.md">CONDUCT</a> for details.</p>
+
+<h2>
+<a id="security" class="anchor" href="#security" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Security</h2>
+
+<p>If you discover any security related issues, please email <a href="mailto:isswp101@gmail.com">isswp101@gmail.com</a> instead of using the issue tracker.</p>
+
+<h2>
+<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Credits</h2>
+
+<ul>
+<li><a href="https://github.com/isswp101">Sergey Sorokin</a></li>
+<li><a href="../../contributors">All Contributors</a></li>
+</ul>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>The MIT License (MIT). Please see <a href="LICENSE.md">License File</a> for more information.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/isswp101/elasticsearch-eloquent">Elasticsearch Eloquent</a> is maintained by <a href="https://github.com/isswp101">isswp101</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
