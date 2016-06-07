@@ -29,8 +29,8 @@
 <a href="https://scrutinizer-ci.com/g/isswp101/elasticsearch-eloquent"><img src="https://img.shields.io/scrutinizer/g/isswp101/elasticsearch-eloquent.svg?style=flat-square" alt="Quality Score"></a>
 <a href="https://packagist.org/packages/isswp101/elasticsearch-eloquent"><img src="https://img.shields.io/packagist/dt/isswp101/elasticsearch-eloquent.svg?style=flat-square" alt="Total Downloads"></a></p>
 
-<p>This package allows you to interact with Elasticsearch as you interact with Eloquent models in Laravel.
-Feel free to improve the project or help to find any bugs.</p>
+<p>This package allows you to interact with Elasticsearch as you interact with Eloquent models in Laravel.<br>
+Feel free to improve the project.</p>
 
 <h2>
 <a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h2>
@@ -244,9 +244,14 @@ Feel free to improve the project or help to find any bugs.</p>
 
 <p>The parent-child relationship is similar in nature to the nested model: both allow you to associate one entity with another. The difference is that, with nested objects, all entities live within the same document while, with parent-child, the parent and children are completely separate documents.</p>
 
-<p>Let's create two models:
-1. <code>PurchaseOrder</code> has many <code>PurchaseOrderLine</code> models
-2. <code>PurchaseOrderLine</code> belongs to <code>PurchaseOrder</code> model</p>
+<p>Let's create two models:</p>
+
+<ol>
+<li>
+<code>PurchaseOrder</code> has many <code>PurchaseOrderLine</code> models</li>
+<li>
+<code>PurchaseOrderLine</code> belongs to <code>PurchaseOrder</code> model</li>
+</ol>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">PurchaseOrder</span> <span class="pl-k">extends</span> <span class="pl-e">ElasticsearchModel</span></span>
 <span class="pl-s1">{</span>
