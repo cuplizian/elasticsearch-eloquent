@@ -20,7 +20,7 @@
 
     <section class="main-content">
       <h1>
-<a id="persimmon--elasticsearch-eloquent-beta" class="anchor" href="#persimmon--elasticsearch-eloquent-beta" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Persimmon / Elasticsearch Eloquent (Beta)</h1>
+<a id="persimmon--elasticsearch-eloquent" class="anchor" href="#persimmon--elasticsearch-eloquent" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Persimmon / Elasticsearch Eloquent</h1>
 
 <p><a href="https://packagist.org/packages/isswp101/elasticsearch-eloquent"><img src="https://img.shields.io/packagist/v/isswp101/elasticsearch-eloquent.svg?style=flat-square" alt="Latest Version on Packagist"></a>
 <a href="LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="Software License"></a>
@@ -29,7 +29,8 @@
 <a href="https://scrutinizer-ci.com/g/isswp101/elasticsearch-eloquent"><img src="https://img.shields.io/scrutinizer/g/isswp101/elasticsearch-eloquent.svg?style=flat-square" alt="Quality Score"></a>
 <a href="https://packagist.org/packages/isswp101/elasticsearch-eloquent"><img src="https://img.shields.io/packagist/dt/isswp101/elasticsearch-eloquent.svg?style=flat-square" alt="Total Downloads"></a></p>
 
-<p>TBD.</p>
+<p>This package allows you to interact with Elasticsearch as you interact with Eloquent models in Laravel.
+Feel free to improve the project or help to find any bugs.</p>
 
 <h2>
 <a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h2>
@@ -44,7 +45,7 @@
 <h3>
 <a id="create-a-new-model" class="anchor" href="#create-a-new-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create a new model</h3>
 
-<p>You must specify static <code>index</code> and <code>type</code> variables to determine the document path.</p>
+<p>You must override static variables <code>index</code> and <code>type</code> to determine the document path.</p>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Isswp101\Persimmon\ElasticsearchModel</span>;</span>
 <span class="pl-s1"></span>
@@ -57,8 +58,13 @@
 <span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-smi">$price</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
 <span class="pl-s1">}</span></pre></div>
 
-<p>Here <code>name</code> and <code>price</code> are fields which will be stored in Elasticsearch.<br>
-Use the static <code>create()</code> method to create document in Elasticsearch:</p>
+<p>Here <code>name</code> and <code>price</code> are fields which will be stored in Elasticsearch.  </p>
+
+<blockquote>
+<p><strong>Warning!</strong> Don't use field names starting with underscore <code>$_*</code>, for example <code>$_name</code>.</p>
+</blockquote>
+
+<p>Use the static <code>create()</code> method to create document in Elasticsearch:</p>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>create([<span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">3</span>, <span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Product 3<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>price<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">30</span>]);</span></pre></div>
 
@@ -151,18 +157,27 @@ Use the static <code>create()</code> method to create document in Elasticsearch:
 
 <p>There are helpers to search documents:</p>
 
-<ul>
-<li>
-<code>first($query)</code> returns the first document according to the query or <code>null</code>.</li>
-<li>
-<code>firstOrFail($query)</code> returns <code>ModelNotFoundException</code> exception if <code>first($query)</code> returns <code>null</code>.</li>
-<li>
-<code>search($query)</code> returns documents (default 50 items) according to the query.</li>
-<li>
-<code>map($query, callable $callback)</code> returns all documents (default 50 items per request) according to the query.</li>
-<li>
-<code>all($query)</code> returns all documents according to the query.</li>
-</ul>
+<p>The <code>first($query)</code> method returns the first document according to the query or <code>null</code>.  </p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>first(<span class="pl-smi">$query</span>);</span></pre></div>
+
+<p>The <code>firstOrFail($query)</code> method returns <code>ModelNotFoundException</code> exception if <code>first($query)</code> returns <code>null</code>.</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$product</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>firstOrFail(<span class="pl-smi">$query</span>);</span></pre></div>
+
+<p>The <code>search($query)</code> method returns documents (default 50 items) according to the query.</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$products</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>search(<span class="pl-smi">$query</span>);</span></pre></div>
+
+<p>The <code>map($query, callable $callback)</code> method returns all documents (default 50 items per request) according to the query.</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$total</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>map([], <span class="pl-k">function</span> (<span class="pl-c1">Product</span> <span class="pl-smi">$product</span>) {</span>
+<span class="pl-s1">    <span class="pl-c">// ...</span></span>
+<span class="pl-s1">});</span></pre></div>
+
+<p>The <code>all($query)</code> method returns all documents according to the query.</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$products</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>all(<span class="pl-smi">$query</span>);</span></pre></div>
 
 <p>If <code>$query</code> is not passed the query will be as <code>match_all</code> query.</p>
 
@@ -190,6 +205,11 @@ Use the static <code>create()</code> method to create document in Elasticsearch:
 <span class="pl-s1"><span class="pl-smi">$query</span><span class="pl-k">-&gt;</span>betweenOrEquals(<span class="pl-s"><span class="pl-pds">'</span>price<span class="pl-pds">'</span></span>, <span class="pl-c1">20</span>, <span class="pl-c1">30</span>)<span class="pl-k">-&gt;</span>greaterThan(<span class="pl-s"><span class="pl-pds">'</span>price<span class="pl-pds">'</span></span>, <span class="pl-c1">15</span>);</span>
 <span class="pl-s1"><span class="pl-smi">$products</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>search(<span class="pl-smi">$query</span>);</span></pre></div>
 
+<h3>
+<a id="filters" class="anchor" href="#filters" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Filters</h3>
+
+<p>Feel free to add your own filters.</p>
+
 <p>The <code>TermFilter</code> filter:</p>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$query</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">QueryBuilder</span>();</span>
@@ -202,14 +222,95 @@ Use the static <code>create()</code> method to create document in Elasticsearch:
 <span class="pl-s1"><span class="pl-smi">$query</span><span class="pl-k">-&gt;</span>filter(<span class="pl-k">new</span> <span class="pl-c1">IdsFilter</span>([<span class="pl-c1">1</span>, <span class="pl-c1">3</span>]));</span>
 <span class="pl-s1"><span class="pl-smi">$products</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>search(<span class="pl-smi">$query</span>);</span></pre></div>
 
+<p>The <code>RangeOrExistFilter</code> filter:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$query</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">QueryBuilder</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$query</span><span class="pl-k">-&gt;</span>filter(<span class="pl-k">new</span> <span class="pl-c1">RangeOrExistFilter</span>(<span class="pl-s"><span class="pl-pds">'</span>price<span class="pl-pds">'</span></span>, [<span class="pl-s"><span class="pl-pds">'</span>gte<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">20</span>]));</span>
+<span class="pl-s1"><span class="pl-smi">$products</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>search(<span class="pl-smi">$query</span>);</span></pre></div>
+
+<h3>
+<a id="aggregations" class="anchor" href="#aggregations" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Aggregations</h3>
+
+<p>Feel free to add your own aggregations.</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$query</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">QueryBuilder</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$query</span><span class="pl-k">-&gt;</span>aggregation(<span class="pl-k">new</span> <span class="pl-c1">TermsAggregation</span>(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>));</span>
+<span class="pl-s1"><span class="pl-smi">$products</span> <span class="pl-k">=</span> <span class="pl-c1">Product</span><span class="pl-k">::</span>search(<span class="pl-smi">$query</span>);</span>
+<span class="pl-s1"><span class="pl-smi">$buckets</span> <span class="pl-k">=</span> <span class="pl-smi">$products</span><span class="pl-k">-&gt;</span>getAggregation(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-c">// Usage: $buckets[0]-&gt;getKey() and $buckets[0]-&gt;getCount()</span></span></pre></div>
+
+<h3>
+<a id="parent-child-relationship" class="anchor" href="#parent-child-relationship" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Parent-Child Relationship</h3>
+
+<p>The parent-child relationship is similar in nature to the nested model: both allow you to associate one entity with another. The difference is that, with nested objects, all entities live within the same document while, with parent-child, the parent and children are completely separate documents.</p>
+
+<p>Let's create two models:
+1. <code>PurchaseOrder</code> has many <code>PurchaseOrderLine</code> models
+2. <code>PurchaseOrderLine</code> belongs to <code>PurchaseOrder</code> model</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">PurchaseOrder</span> <span class="pl-k">extends</span> <span class="pl-e">ElasticsearchModel</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$index</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test_parent_child_rel<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>orders<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-smi">$name</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">lines</span>()</span>
+<span class="pl-s1">    {</span>
+<span class="pl-s1">        <span class="pl-k">return</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>hasMany(<span class="pl-c1">PurchaseOrderLine</span><span class="pl-k">::</span><span class="pl-c1">class</span>);</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">PurchaseOrderLine</span> <span class="pl-k">extends</span> <span class="pl-e">ElasticsearchModel</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$index</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test_parent_child_rel<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>lines<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$parentType</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>orders<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-smi">$name</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-en">po</span>()</span>
+<span class="pl-s1">    {</span>
+<span class="pl-s1">        <span class="pl-k">return</span> <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>belongsTo(<span class="pl-c1">PurchaseOrder</span><span class="pl-k">::</span><span class="pl-c1">class</span>);</span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">}</span></pre></div>
+
+<p>To <code>save()</code> models you can use the following code:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$po</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">PurchaseOrder</span>([<span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">1</span>, <span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>PO1<span class="pl-pds">'</span></span>]);</span>
+<span class="pl-s1"><span class="pl-smi">$line</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">PurchaseOrderLine</span>([<span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">1</span>, <span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Line1<span class="pl-pds">'</span></span>]);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$po</span><span class="pl-k">-&gt;</span>save();</span>
+<span class="pl-s1"><span class="pl-smi">$po</span><span class="pl-k">-&gt;</span>lines()<span class="pl-k">-&gt;</span>save(<span class="pl-smi">$line</span>);</span></pre></div>
+
+<p>You can use the <code>associate()</code> method to save models:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$po</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">PurchaseOrder</span>([<span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">1</span>, <span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>PO1<span class="pl-pds">'</span></span>]);</span>
+<span class="pl-s1"><span class="pl-smi">$line</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">PurchaseOrderLine</span>([<span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">1</span>, <span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>Line1<span class="pl-pds">'</span></span>]);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$po</span><span class="pl-k">-&gt;</span>save();</span>
+<span class="pl-s1"><span class="pl-smi">$line</span><span class="pl-k">-&gt;</span>po()<span class="pl-k">-&gt;</span>associate(<span class="pl-smi">$po</span>);</span>
+<span class="pl-s1"><span class="pl-smi">$line</span><span class="pl-k">-&gt;</span>save();</span></pre></div>
+
+<p>To get parent you can use the following code:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$line</span> <span class="pl-k">=</span> <span class="pl-c1">PurchaseOrderLine</span><span class="pl-k">::</span>findWithParentId(<span class="pl-c1">1</span>, <span class="pl-c1">1</span>);</span>
+<span class="pl-s1"><span class="pl-smi">$po</span> <span class="pl-k">=</span> <span class="pl-smi">$line</span><span class="pl-k">-&gt;</span>po()<span class="pl-k">-&gt;</span>get();</span></pre></div>
+
+<p>To get children you can use the following code:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-smi">$po</span> <span class="pl-k">=</span> <span class="pl-c1">PurchaseOrder</span><span class="pl-k">::</span>findOrFail(<span class="pl-c1">1</span>);</span>
+<span class="pl-s1"><span class="pl-smi">$line</span> <span class="pl-k">=</span> <span class="pl-smi">$po</span><span class="pl-k">-&gt;</span>lines()<span class="pl-k">-&gt;</span>find(<span class="pl-c1">1</span>); <span class="pl-c">// by id</span></span>
+<span class="pl-s1"><span class="pl-smi">$lines</span> <span class="pl-k">=</span> <span class="pl-smi">$po</span><span class="pl-k">-&gt;</span>lines()<span class="pl-k">-&gt;</span>get(); <span class="pl-c">// all children</span></span></pre></div>
+
 <p><strong>TO BE CONTINUED...</strong></p>
 
 <p><a href="https://github.com/TODO" class="user-mention">@TODO</a>:</p>
 
 <ul>
-<li>Add parent child relationship</li>
-<li>Add aggregations</li>
-<li>Add <code>RangeOrExistFilter</code> filter</li>
+<li>Add documentation about filters</li>
+<li>Add documentation about events</li>
+<li>Add documentation about inner_hits feature</li>
 </ul>
 
 <h2>
