@@ -4,21 +4,21 @@ namespace Isswp101\Persimmon\QueryBuilder\Filters\Decorator;
 
 use Isswp101\Persimmon\QueryBuilder\Filters\Filter;
 
-class HasParentDecorator extends FilterDecorator
+class NestedFilterDecorator extends FilterDecorator
 {
-    protected $parentType;
+    protected $field;
 
-    public function __construct(Filter $filter, $parentType)
+    public function __construct(Filter $filter, $field)
     {
         parent::__construct($filter);
-        $this->parentType = $parentType;
+        $this->field = $field;
     }
 
     public function query($values)
     {
         $query = [
-            'has_parent' => [
-                'type' => $this->parentType,
+            'nested' => [
+                'path' => $this->field,
                 'filter' => $this->filter->query($values),
             ]
         ];

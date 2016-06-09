@@ -1,6 +1,6 @@
 <?php
 
-namespace Isswp101\Persimmon\QueryBuilder\Filters\Filter\Decorator;
+namespace Isswp101\Persimmon\QueryBuilder\Filters\Decorator;
 
 use Isswp101\Persimmon\QueryBuilder\Filters\Filter;
 

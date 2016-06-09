@@ -187,7 +187,7 @@ class QueryBuilder
         return $this;
     }
 
-    public function orWhere($field, $value)
+    public function should($field, $value)
     {
         $query = ['term' => [$field => $value]];
         $this->merge($query, 'should');
