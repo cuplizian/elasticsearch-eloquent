@@ -156,7 +156,7 @@ class QueryBuilder
         return json_encode($this->getQuery(), $options);
     }
 
-    protected function merge(array $query, $mode = 'must')
+    protected function merge($query, $mode = 'must')
     {
         if (!array_key_exists('filter', $this->query['body'])) {
             $this->query['body']['filter']['bool'][$mode] = [];

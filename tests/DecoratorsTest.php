@@ -14,8 +14,8 @@ class DecoratorsTest extends BaseTestCase
     public static function setUpBeforeClass()
     {
         $hash = time() . rand(1, 1000);
-        PurchaseOrder::$index = 'travis_ci_test_parent_child_rel_' . $hash;
-        PurchaseOrderLine::$index = 'travis_ci_test_parent_child_rel_' . $hash;
+        PurchaseOrder::$index = 'travis_ci_test_decorators' . $hash;
+        PurchaseOrderLine::$index = 'travis_ci_test_decorators' . $hash;
     }
 
     public function testPrepareIndex()
@@ -37,8 +37,11 @@ class DecoratorsTest extends BaseTestCase
     {
         $po = new PurchaseOrder();
         $po->id = 1;
+        $po->name = 'PO1';
+
         $line = new PurchaseOrderLine();
-        $line->id = 2;
+        $line->id = 1;
+        $line->name = 'Line1';
 
         $po->save();
         $line->po()->associate($po);
