@@ -50,15 +50,15 @@ Feel free to improve the project.</p>
 </blockquote>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Elasticsearch\Client</span>;</span>
-<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Isswp101\Persimmon\DAL\DALMediator</span>;</span>
 <span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Isswp101\Persimmon\DAL\ElasticsearchDAL</span>;</span>
 <span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Isswp101\Persimmon\ElasticsearchModel</span> <span class="pl-k">as</span> <span class="pl-c1">Model</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Isswp101\Persimmon\Event\EventEmitter</span>;</span>
 <span class="pl-s1"></span>
 <span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">ElasticsearchModel</span> <span class="pl-k">extends</span> <span class="pl-e">Model</span></span>
 <span class="pl-s1">{</span>
 <span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-c1">__construct</span>(<span class="pl-k">array</span> <span class="pl-smi">$attributes</span> <span class="pl-k">=</span> [])</span>
 <span class="pl-s1">    {</span>
-<span class="pl-s1">        <span class="pl-smi">$dal</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">ElasticsearchDAL</span>(<span class="pl-smi">$this</span>, app(<span class="pl-c1">Client</span><span class="pl-k">::</span><span class="pl-c1">class</span>), <span class="pl-k">new</span> <span class="pl-c1">DALMediator</span>());</span>
+<span class="pl-s1">        <span class="pl-smi">$dal</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">ElasticsearchDAL</span>(<span class="pl-smi">$this</span>, app(<span class="pl-c1">Client</span><span class="pl-k">::</span><span class="pl-c1">class</span>), app(<span class="pl-c1">EventEmitter</span><span class="pl-k">::</span><span class="pl-c1">class</span>));</span>
 <span class="pl-s1"></span>
 <span class="pl-s1">        <span class="pl-k">parent</span><span class="pl-k">::</span>__construct(<span class="pl-smi">$dal</span>, <span class="pl-smi">$attributes</span>);</span>
 <span class="pl-s1">    }</span>
@@ -78,8 +78,8 @@ Feel free to improve the project.</p>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">Product</span> <span class="pl-k">extends</span> <span class="pl-e">ElasticsearchModel</span></span>
 <span class="pl-s1">{</span>
-<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$index</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>;</span>
-<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$_index</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$_type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>;</span>
 <span class="pl-s1"></span>
 <span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-smi">$name</span>;</span>
 <span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-smi">$price</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
@@ -200,8 +200,8 @@ You can override the following methods to define events:</p>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">Product</span> <span class="pl-k">extends</span> <span class="pl-e">ElasticsearchModel</span></span>
 <span class="pl-s1">{</span>
-<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-smi">$index</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>;</span>
-<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-smi">$type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-smi">$_index</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-smi">$_type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>;</span>
 <span class="pl-s1"></span>
 <span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-smi">$name</span>;</span>
 <span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-smi">$price</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
@@ -328,8 +328,8 @@ You can override the following methods to define events:</p>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">PurchaseOrder</span> <span class="pl-k">extends</span> <span class="pl-e">ElasticsearchModel</span></span>
 <span class="pl-s1">{</span>
-<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$index</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test_parent_child_rel<span class="pl-pds">'</span></span>;</span>
-<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>orders<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$_index</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test_parent_child_rel<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$_type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>orders<span class="pl-pds">'</span></span>;</span>
 <span class="pl-s1"></span>
 <span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-smi">$name</span>;</span>
 <span class="pl-s1"></span>
@@ -341,9 +341,10 @@ You can override the following methods to define events:</p>
 <span class="pl-s1"></span>
 <span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">PurchaseOrderLine</span> <span class="pl-k">extends</span> <span class="pl-e">ElasticsearchModel</span></span>
 <span class="pl-s1">{</span>
-<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$index</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test_parent_child_rel<span class="pl-pds">'</span></span>;</span>
-<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>lines<span class="pl-pds">'</span></span>;</span>
-<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$parentType</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>orders<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$_index</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>test_parent_child_rel<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$_type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>lines<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-k">static</span> <span class="pl-smi">$_parentType</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>orders<span class="pl-pds">'</span></span>;</span>
 <span class="pl-s1"></span>
 <span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-smi">$name</span>;</span>
 <span class="pl-s1"></span>
@@ -394,18 +395,18 @@ You can override the following methods to define events:</p>
 <span class="pl-s1"><span class="pl-smi">$po</span> <span class="pl-k">=</span> <span class="pl-smi">$line</span><span class="pl-k">-&gt;</span>po()<span class="pl-k">-&gt;</span>get(); <span class="pl-c">// will be retrieved from inner_hits cache</span></span></pre></div>
 
 <h3>
-<a id="debugging-and-data-access-layer-events" class="anchor" href="#debugging-and-data-access-layer-events" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Debugging and data access layer events</h3>
+<a id="logging-and-data-access-layer-events" class="anchor" href="#logging-and-data-access-layer-events" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Logging and data access layer events</h3>
 
 <p>To debug all elasticsearch queries to search you can use own <code>DALEmitter</code> class:</p>
 
-<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Isswp101\Persimmon\DAL\DALMediator</span>;</span>
-<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Log</span>;</span>
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Isswp101\Persimmon\DAL\DALEvents</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Isswp101\Persimmon\Event\EventEmitter</span>;</span>
 <span class="pl-s1"></span>
-<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">DALEmitter</span> <span class="pl-k">extends</span> <span class="pl-e">DALMediator</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">DALEmitter</span> <span class="pl-k">extends</span> <span class="pl-e">EventEmitter</span></span>
 <span class="pl-s1">{</span>
 <span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-c1">__construct</span>()</span>
 <span class="pl-s1">    {</span>
-<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>attach(<span class="pl-c1">DALMediator</span><span class="pl-k">::</span><span class="pl-c1">EVENT_BEFORE_SEARCH</span>, <span class="pl-k">function</span> (<span class="pl-k">array</span> <span class="pl-smi">$params</span>) {</span>
+<span class="pl-s1">        <span class="pl-smi">$this</span><span class="pl-k">-&gt;</span>on(<span class="pl-c1">DALEvents</span><span class="pl-k">::</span><span class="pl-c1">BEFORE_SEARCH</span>, <span class="pl-k">function</span> (<span class="pl-k">array</span> <span class="pl-smi">$params</span>) {</span>
 <span class="pl-s1">            <span class="pl-c1">Log</span><span class="pl-k">::</span>debug(<span class="pl-s"><span class="pl-pds">'</span>Elasticsearch query<span class="pl-pds">'</span></span>, <span class="pl-smi">$params</span>);</span>
 <span class="pl-s1">        });</span>
 <span class="pl-s1">    }</span>
@@ -413,11 +414,16 @@ You can override the following methods to define events:</p>
 
 <p>And configure it in your service provider:</p>
 
-<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">ElasticsearchModel</span> <span class="pl-k">extends</span> <span class="pl-e">Model</span></span>
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Elasticsearch\Client</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Isswp101\Persimmon\DAL\ElasticsearchDAL</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Isswp101\Persimmon\ElasticsearchModel</span> <span class="pl-k">as</span> <span class="pl-c1">Model</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Isswp101\Persimmon\Test\Models\Events\DALEmitter</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">ElasticsearchModel</span> <span class="pl-k">extends</span> <span class="pl-e">Model</span></span>
 <span class="pl-s1">{</span>
 <span class="pl-s1">    <span class="pl-k">public</span> <span class="pl-k">function</span> <span class="pl-c1">__construct</span>(<span class="pl-k">array</span> <span class="pl-smi">$attributes</span> <span class="pl-k">=</span> [])</span>
 <span class="pl-s1">    {</span>
-<span class="pl-s1">        <span class="pl-smi">$dal</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">ElasticsearchDAL</span>(<span class="pl-smi">$this</span>, app(<span class="pl-c1">Client</span><span class="pl-k">::</span><span class="pl-c1">class</span>), <span class="pl-k">new</span> <span class="pl-c1">DALEmitter</span>());</span>
+<span class="pl-s1">        <span class="pl-smi">$dal</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">ElasticsearchDAL</span>(<span class="pl-smi">$this</span>, app(<span class="pl-c1">Client</span><span class="pl-k">::</span><span class="pl-c1">class</span>), app(<span class="pl-c1">DALEmitter</span><span class="pl-k">::</span><span class="pl-c1">class</span>));</span>
 <span class="pl-s1"></span>
 <span class="pl-s1">        <span class="pl-k">parent</span><span class="pl-k">::</span>__construct(<span class="pl-smi">$dal</span>, <span class="pl-smi">$attributes</span>);</span>
 <span class="pl-s1">    }</span>
@@ -428,9 +434,9 @@ You can override the following methods to define events:</p>
 
 <ul>
 <li>
-<code>DALMediator::EVENT_BEFORE_SEARCH</code> is triggered before any search.</li>
+<code>DALEvents::BEFORE_SEARCH</code> is triggered before any search.</li>
 <li>
-<code>DALMediator::EVENT_AFTER_SEARCH</code> is triggered after any search.</li>
+<code>DALEvents::AFTER_SEARCH</code> is triggered after any search.</li>
 </ul>
 
 <p><strong>TO BE CONTINUED...</strong></p>
