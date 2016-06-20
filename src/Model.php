@@ -243,4 +243,10 @@ abstract class Model implements Arrayable, Jsonable, Stringable, JsonSerializabl
             }
         }
     }
+
+    /**
+     * @param mixed $id
+     * @return mixed
+     */
+    abstract public function getPath($id = null);
 }
