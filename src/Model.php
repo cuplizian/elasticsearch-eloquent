@@ -9,6 +9,8 @@ use Isswp101\Persimmon\Contracts\Jsonable;
 use Isswp101\Persimmon\Contracts\Stringable;
 use Isswp101\Persimmon\DAL\IDAL;
 use Isswp101\Persimmon\Exceptions\ModelNotFoundException;
+use Isswp101\Persimmon\Path\Path;
+use Isswp101\Persimmon\Path\PathInterface;
 use Isswp101\Persimmon\Traits\Cacheable;
 use Isswp101\Persimmon\Traits\Eventable;
 use Isswp101\Persimmon\Traits\Fillable;
@@ -47,6 +49,14 @@ abstract class Model implements Arrayable, Jsonable, Stringable, JsonSerializabl
         $this->_dal = $dal;
 
         $this->fill($attributes);
+    }
+
+    /**
+     * @return PathInterface
+     */
+    public function getPath()
+    {
+        return new Path($this->getId());
     }
 
     /**

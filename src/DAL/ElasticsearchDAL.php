@@ -8,28 +8,17 @@ use Isswp101\Persimmon\Collection\ElasticsearchCollection;
 use Isswp101\Persimmon\ElasticsearchModel;
 use Isswp101\Persimmon\Event\EventEmitter;
 use Isswp101\Persimmon\Model;
+use Isswp101\Persimmon\Path\PathInterface;
 
 class ElasticsearchDAL implements IDAL
 {
-    protected $model;
     protected $client;
     protected $emitter;
 
-    public function __construct(ElasticsearchModel $model, Client $client, EventEmitter $emitter)
+    public function __construct(Client $client, EventEmitter $emitter)
     {
-        $this->model = $model;
         $this->client = $client;
         $this->emitter = $emitter;
-    }
-
-    public function setModel(Model $model)
-    {
-        $this->model = $model;
-    }
-
-    public function getModel()
-    {
-        return $this->model;
     }
 
     public function getEventEmitter()
@@ -37,9 +26,9 @@ class ElasticsearchDAL implements IDAL
         return $this->emitter;
     }
 
-    public function get($id, array $options = [])
+    public function get(PathInterface $path, array $options = [])
     {
-        $params = $this->model->getPath()->toArray();
+        $params = $path->toArray();
 
         if (!empty($options['columns'])) {
             $params['_source'] = $options['columns'];

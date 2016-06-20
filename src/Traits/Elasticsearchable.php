@@ -2,7 +2,6 @@
 
 namespace Isswp101\Persimmon\Traits;
 
-use Isswp101\Persimmon\Elasticsearch\DocumentPath;
 use Isswp101\Persimmon\Elasticsearch\InnerHits;
 use Isswp101\Persimmon\Elasticsearch\Response;
 use Isswp101\Persimmon\Exceptions\InvalidModelEndpointException;
@@ -121,11 +120,6 @@ trait Elasticsearchable
         $this->setInnerHits($innerHits);
         $this->setParentId($innerHits->getParentId($this->getParentType()));
         return $this;
-    }
-
-    public function getPath()
-    {
-        return new DocumentPath($this->getIndex(), $this->getType(), $this->getId(), $this->getParentId());
     }
 
     public function getPosition()

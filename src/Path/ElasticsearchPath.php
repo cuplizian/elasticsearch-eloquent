@@ -1,10 +1,10 @@
 <?php
 
-namespace Isswp101\Persimmon\Elasticsearch;
+namespace Isswp101\Persimmon\Path;
 
 use Isswp101\Persimmon\Traits\Presentable;
 
-class DocumentPath
+class ElasticsearchPath implements PathInterface
 {
     use Presentable;
 
@@ -41,7 +41,7 @@ class DocumentPath
         return $this->parent;
     }
 
-    public function getPath()
+    public function make()
     {
         $res = [];
         if (!is_null($this->index)) {

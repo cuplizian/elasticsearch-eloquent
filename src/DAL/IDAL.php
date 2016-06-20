@@ -3,40 +3,35 @@
 namespace Isswp101\Persimmon\DAL;
 
 use Isswp101\Persimmon\Event\EventEmitter;
-use Isswp101\Persimmon\Model;
+use Isswp101\Persimmon\Path\PathInterface;
 
 interface IDAL
 {
     /**
-     * @param Model $model
-     */
-    public function setModel(Model $model);
-
-    /**
-     * @return Model
-     */
-    public function getModel();
-
-    /**
+     * Get event emitter.
+     * 
      * @return EventEmitter
      */
     public function getEventEmitter();
 
     /**
-     * @param mixed $id
+     * @param PathInterface $path
      * @param array $options
-     * @return Model
+     * @return array
      */
-    public function get($id, array $options = []);
+    public function get(PathInterface $path, array $options = []);
 
     /**
+     * @param PathInterface $path
+     * @param array $body
      * @param array $columns
      * @return mixed Inserted id.
      */
-    public function put(array $columns = ['*']);
+    public function put(PathInterface $path, array $body, array $columns = ['*']);
 
     /**
+     * @param PathInterface $path
      * @return mixed
      */
-    public function delete();
+    public function delete(PathInterface $path);
 }

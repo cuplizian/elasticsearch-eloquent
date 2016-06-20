@@ -8,6 +8,7 @@ use Isswp101\Persimmon\Collection\ElasticsearchCollection;
 use Isswp101\Persimmon\DAL\ElasticsearchDAL;
 use Isswp101\Persimmon\DAL\IDAL;
 use Isswp101\Persimmon\Exceptions\ModelNotFoundException;
+use Isswp101\Persimmon\Path\ElasticsearchPath;
 use Isswp101\Persimmon\QueryBuilder\QueryBuilder;
 use Isswp101\Persimmon\Relationship\BelongsToRelationship;
 use Isswp101\Persimmon\Relationship\HasManyRelationship;
@@ -29,6 +30,11 @@ class ElasticsearchModel extends Model
         $this->validateModelEndpoint();
 
         parent::__construct($dal, $attributes);
+    }
+
+    public function getPath()
+    {
+        return new ElasticsearchPath($this->getIndex(), $this->getType(), $this->getId(), $this->getParentId());
     }
 
     public static function findWithParentId($id, $parent, array $columns = ['*'])
